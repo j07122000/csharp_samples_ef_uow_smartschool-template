@@ -17,6 +17,7 @@ namespace SmartSchool.Persistence
         }
 
         public IMeasurementRepository MeasurementRepository { get; set; }
+        public ISensorRepository SensorRepository { get; set; }
 
 
         /// <summary>
