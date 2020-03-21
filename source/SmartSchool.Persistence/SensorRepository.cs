@@ -16,15 +16,43 @@ namespace SmartSchool.Persistence
         {
             _dbContext = dbContext;
         }
-
-        public IEnumerable<Sensor> GetSensorsAverage()
+        public void AddRange(Sensor[] sensors)
         {
-           return _dbContext.Sensors
-                .Include(m => m.Measurements)
-                .OrderBy(l => l.Location)
-                .ThenBy(s => s.Name);
-
+            _dbContext.Sensors.AddRange(sensors);
         }
+
+        public Sensor[] GetAllAsync()
+        {
+            return  _dbContext.Sensors
+                .OrderBy(sensor => sensor.Name)
+                .ToArray();
+        }
+
+
+        public async  Task<(Sensor Sensor, Double Average)[]> GetSensorsAverage()
+        {
+            var groupedMeasurements = await _dbContext.Measurements
+                          .GroupBy(m => m.SensorId)
+                          .Select(group => new
+                          {
+                              SensorId = group.Key,
+                              Average = group.Average(m => m.Value)
+                          })
+                          .ToArrayAsync();
+            var sensors = await _dbContext
+                .Sensors
+                .OrderBy(sensor => sensor.Location)
+                .ThenBy(s => s.Name)
+                .ToArrayAsync();
+            return sensors
+                .Select(s =>
+                    (
+                        s,
+                        groupedMeasurements.Any(gm => gm.SensorId == s.Id) ? groupedMeasurements.Single(gm => gm.SensorId == s.Id).Average : -9999)
+                )
+                .ToArray();
+        }
+        
 
     }
 }

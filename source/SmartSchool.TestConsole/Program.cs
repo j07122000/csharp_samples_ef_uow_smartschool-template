@@ -7,7 +7,7 @@ namespace SmartSchool.TestConsole
 {
 	class Program
 	{
-		static void Main()
+		static async System.Threading.Tasks.Task Main()
 		{
 			Console.WriteLine("Import der Measurements und Sensors in die Datenbank");
 			using (UnitOfWork unitOfWorkImport = new UnitOfWork())
@@ -57,14 +57,13 @@ namespace SmartSchool.TestConsole
 				Console.WriteLine();
 				Console.WriteLine("Alle Sensoren mit dem Durchschnitt der Messwerte");
 				// TODO
-				var results = unitOfWork.SensorRepository
-					.GetSensorsAverage();
-				foreach (var r in results)
+				var results = await unitOfWork.SensorRepository.GetSensorsAverage();
+				Console.WriteLine("Location           Name                 Value");
+				for (int i = 0; i < results.Length; i++)
 				{
-					Console.WriteLine(r.ToString());
+					var result = results[i];
+					Console.WriteLine($"{result.Item1.Location,-18} {result.Item1.Name,-20} {result.Item2:f2} {result.Item1.Unit}");
 				}
-				Console.WriteLine();
-
 			}
 
 			Console.Write("Beenden mit Eingabetaste ...");

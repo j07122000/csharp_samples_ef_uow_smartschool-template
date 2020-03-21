@@ -7,6 +7,10 @@ namespace SmartSchool.Core.Contracts
 {
     public interface ISensorRepository
     {
-        IEnumerable<Sensor> GetSensorsAverage();
+        void AddRange(Sensor[] sensors);
+        Sensor[] GetAllAsync();
+       
+
+        Task<(Sensor Sensor, Double Average)[]> GetSensorsAverage();
     }
 }
