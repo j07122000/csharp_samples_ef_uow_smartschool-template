@@ -62,7 +62,7 @@ namespace SmartSchool.TestConsole
 				for (int i = 0; i < results.Length; i++)
 				{
 					var result = results[i];
-					Console.WriteLine($"{result.Item1.Location,-18} {result.Item1.Name,-20} {result.Item2:f2} {result.Item1.Unit}");
+					Console.WriteLine($"{result.Item1.Location} {result.Item1.Name} {result.Item2} {result.Item1.Unit}");
 				}
 			}
 
