@@ -17,10 +17,7 @@ namespace SmartSchool.Core.Entities
         public string Unit { get; set; }
         public ICollection<Measurement> Measurements { get; set; }
 
-        public override string ToString()
-        {
-            return $"{Location} {Name} {Measurements.Average(m => m.Value)}";
-        }
+       
 
     }
 }

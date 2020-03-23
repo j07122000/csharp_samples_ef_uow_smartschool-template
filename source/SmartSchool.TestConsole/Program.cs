@@ -58,11 +58,11 @@ namespace SmartSchool.TestConsole
 				Console.WriteLine("Alle Sensoren mit dem Durchschnitt der Messwerte");
 				// TODO
 				var results = await unitOfWork.SensorRepository.GetSensorsAverage();
-				Console.WriteLine("Location           Name                 Value");
+				Console.WriteLine("Location             Name                 Value");
 				for (int i = 0; i < results.Length; i++)
 				{
 					var result = results[i];
-					Console.WriteLine($"{result.Item1.Location} {result.Item1.Name} {result.Item2} {result.Item1.Unit}");
+					Console.WriteLine($"{result.Item1.Location,-20} {result.Item1.Name,-20} {Math.Round(result.Item2,2),4} {result.Item1.Unit}");
 				}
 			}
 

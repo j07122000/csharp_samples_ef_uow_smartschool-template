@@ -14,6 +14,8 @@ namespace SmartSchool.Persistence
         {
             _dbContext = new ApplicationDbContext();
             MeasurementRepository = new MeasurementRepository(_dbContext);
+            SensorRepository = new SensorRepository(_dbContext);
+
         }
 
         public IMeasurementRepository MeasurementRepository { get; set; }
